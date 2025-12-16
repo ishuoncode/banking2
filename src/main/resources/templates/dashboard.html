@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+        }
+        .container {
+            width: 400px;
+            margin: 80px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+        }
+        .field {
+            margin: 10px 0;
+        }
+        .label {
+            font-weight: bold;
+        }
+        .balance {
+            font-size: 22px;
+            color: green;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .logout {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Welcome, <span th:text="${user.name}">User</span></h2>
+
+    <div class="field">
+        <span class="label">Email:</span>
+        <span th:text="${user.email}"></span>
+    </div>
+
+    <div class="field">
+        <span class="label">City:</span>
+        <span th:text="${user.city}"></span>
+    </div>
+
+    <div class="field">
+        <span class="label">Status:</span>
+        <span th:text="${user.status}"></span>
+    </div>
+
+    <div class="balance">
+        Balance: ₹ <span th:text="${user.balance}">0</span>
+    </div>
+
+    <div class="logout">
+        <form th:action="@{/logout}" method="post">
+            <button type="submit">Logout</button>
+        </form>
+    </div>
+</div>
+<hr/>
+
+<h3>Deposit</h3>
+<form th:action="@{/deposit}" method="post">
+    <input type="number" name="amount" step="0.01" min="1" required />
+    <button type="submit">Deposit</button>
+</form>
+
+<br/>
+
+<h3>Withdraw</h3>
+<form th:action="@{/withdraw}" method="post">
+    <input type="number" name="amount" step="0.01" min="1" required />
+    <button type="submit">Withdraw</button>
+</form>
+
+</body>
+</html>
