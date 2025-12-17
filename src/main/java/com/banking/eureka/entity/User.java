@@ -21,6 +21,9 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
+    @Column(nullable = false, unique = true, length = 20)
+    private String accountNumber;
+
     private String name;
 
     @Column(unique = true, nullable = false)
@@ -33,9 +36,13 @@ public class User {
     @Builder.Default
     private BigDecimal balance = BigDecimal.ZERO;
 
-    @Enumerated(EnumType.STRING)
     @Builder.Default
+    @Enumerated(EnumType.STRING)
     private Status status = Status.ACTIVE;
+
+    @Builder.Default
+    @Column(nullable = false)
+    private int failedAttempts = 0;
 
 
     private String address;

@@ -42,6 +42,11 @@
     <h2>Welcome, <span th:text="${user.name}">User</span></h2>
 
     <div class="field">
+        <span class="label">Account Number:</span>
+        <span th:text="${user.accountNumber}"></span>
+    </div>
+
+    <div class="field">
         <span class="label">Email:</span>
         <span th:text="${user.email}"></span>
     </div>
@@ -81,6 +86,38 @@
     <input type="number" name="amount" step="0.01" min="1" required />
     <button type="submit">Withdraw</button>
 </form>
+
+<hr/>
+
+<h3>Transfer Money</h3>
+
+<form th:action="@{/transfer}" method="post">
+
+    <div class="field">
+        <label class="label">To Account Number:</label><br/>
+        <input type="text"
+               name="toAccountNumber"
+               placeholder="Enter receiver account number"
+               required />
+    </div>
+
+    <br/>
+
+    <div class="field">
+        <label class="label">Amount:</label><br/>
+        <input type="number"
+               name="amount"
+               step="0.01"
+               min="1"
+               placeholder="Enter amount"
+               required />
+    </div>
+
+    <br/>
+
+    <button type="submit">Transfer</button>
+</form>
+
 
 </body>
 </html>

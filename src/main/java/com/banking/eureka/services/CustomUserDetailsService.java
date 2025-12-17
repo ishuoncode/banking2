@@ -1,5 +1,6 @@
 package com.banking.eureka.services;
 
+import com.banking.eureka.entity.Status;
 import com.banking.eureka.entity.User;
 import com.banking.eureka.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,10 @@ public class CustomUserDetailsService implements UserDetailsService {
         User user = customerRepository.findByEmail(email)
                 .orElseThrow(() ->
                         new UsernameNotFoundException("User not found"));
+
+        if (user.getStatus() == Status.INACTIVE) {
+            throw new UsernameNotFoundException("Account is locked");
+        }
 
         return org.springframework.security.core.userdetails.User
                 .withUsername(user.getEmail())

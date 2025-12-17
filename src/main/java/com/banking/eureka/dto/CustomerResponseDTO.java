@@ -12,7 +12,7 @@ public class CustomerResponseDTO {
     private Long userId;
     private String name;
     private String email;
-
+    private String accountNumber;
     private BigDecimal balance;
     private String status;
 

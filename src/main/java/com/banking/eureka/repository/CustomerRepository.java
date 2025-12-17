@@ -11,6 +11,10 @@ public interface CustomerRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByEmail(String email);
 
+    boolean existsByAccountNumber(String accountNumber);
+    Optional<User> findByAccountNumber(String accountNumber);
+
+
     boolean existsByEmail(
             @NotBlank(message = "Email is required")
             @Email(message = "Invalid email format")

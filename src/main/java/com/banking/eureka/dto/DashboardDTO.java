@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 @Data
 @Builder
 public class DashboardDTO {
-
+    private String accountNumber;
     private String name;
     private String email;
     private String city;

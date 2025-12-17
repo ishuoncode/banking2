@@ -11,6 +11,7 @@ public class CustomerMapper {
     public static CustomerResponseDTO toResponse(User user) {
 
         return CustomerResponseDTO.builder()
+                .accountNumber(user.getAccountNumber())
                 .userId(user.getUserId())
                 .name(user.getName())
                 .email(user.getEmail())
@@ -27,6 +28,7 @@ public class CustomerMapper {
     public static DashboardDTO toDashboard(User user) {
 
         return DashboardDTO.builder()
+                .accountNumber(user.getAccountNumber())
                 .name(user.getName())
                 .email(user.getEmail())
                 .city(user.getCity())

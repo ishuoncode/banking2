@@ -1,12 +1,12 @@
 package com.banking.eureka.controller;
 
-import com.banking.eureka.dto.CreateCustomerDTO;
-import com.banking.eureka.dto.CustomerResponseDTO;
-import com.banking.eureka.dto.LoginRequestDTO;
-import com.banking.eureka.dto.LoginResponseDTO;
+import com.banking.eureka.dto.*;
+import com.banking.eureka.entity.User;
 import com.banking.eureka.services.CustomerService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

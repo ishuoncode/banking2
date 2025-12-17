@@ -2,7 +2,8 @@ package com.banking.eureka.controller;
 
 import com.banking.eureka.dto.CreateCustomerDTO;
 import com.banking.eureka.dto.DashboardDTO;
-import com.banking.eureka.dto.LoginRequestDTO;
+import com.banking.eureka.dto.TransferByAccountDTO;
+import com.banking.eureka.entity.Status;
 import com.banking.eureka.entity.User;
 import com.banking.eureka.services.CustomerService;
 import jakarta.validation.Valid;
@@ -30,10 +31,39 @@ public class PageController {
     }
 
     @GetMapping("/login")
-    public String loginPage(Model model) {
-        model.addAttribute("loginRequestDTO", new LoginRequestDTO());
+    public String loginPage(
+            @RequestParam(value = "error", required = false) String error,
+            @RequestParam(value = "username", required = false) String username,
+            Model model) {
+        System.out.println(username+"😊😊😊😊");
+        if (error != null && username != null) {
+            try {
+                User user = customerService.getCustomerByEmail(username);
+
+                int remaining = 3 - user.getFailedAttempts();
+
+                if (user.getStatus() == Status.INACTIVE) {
+                    model.addAttribute("errorMessage", "Your account is locked");
+                } else if (remaining > 0) {
+                    model.addAttribute(
+                            "errorMessage",
+                            remaining + " login attempt(s) left"
+                    );
+                } else {
+                    model.addAttribute("errorMessage", "Invalid email or password");
+                }
+
+            } catch (RuntimeException ex) {
+                model.addAttribute("errorMessage", "Invalid email or password");
+            }
+
+        }
+
+        System.out.println(model.toString()+"😊😊😊😊");
         return "login";
     }
+
+
 
     @GetMapping("/signup")
     public String signupPage(Model model) {
@@ -91,6 +121,25 @@ public class PageController {
         return "redirect:/dashboard";
     }
 
+        @PostMapping("/transfer")
+        public String transfer(
+                @Valid @ModelAttribute TransferByAccountDTO dto,
+                org.springframework.security.core.Authentication authentication) {
+
+            String email = authentication.getName();
+
+            User sender = customerService.getCustomerByEmail(email);
+
+            customerService.transferByAccountNumber(
+                    sender.getAccountNumber(),
+                    dto.getToAccountNumber(),
+                    dto.getAmount()
+            );
+
+            return "redirect:/dashboard";
+        }
+    }
 
 
-}
+
+
